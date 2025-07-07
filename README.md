@@ -1,4 +1,6 @@
-# [repo-name]
+# LLM Prompts
+
+A collection of LLM prompts for NOAA NMFS related tasks
 
 
 # Disclaimer
