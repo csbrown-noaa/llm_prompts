@@ -1,0 +1,5 @@
+_run_analysis.R:
+
+`here` library did not have appropriate markers for project root.  This is not really GEMINI's fault, and would have worked in a normal project, but I did have to add a `.here` file in the root directory.
+
+paths to generated csv files were incorrect.  Had to rename both the directories and the paths.
