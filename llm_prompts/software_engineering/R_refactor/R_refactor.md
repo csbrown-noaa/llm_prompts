@@ -77,7 +77,7 @@ Your refactoring is governed by a strict scope. You will communicate your work a
 
 You must generate a single markdown file containing the debriefing, formatted **exactly** as follows.
 
-```markdown
+````markdown
 # Refactoring Debrief for `[Original Script Name]`
 
 * **Date of Refactor:** `[Current Date]`
@@ -95,7 +95,6 @@ A high-level overview of the work performed.
 ## 2. New Project Structure
 
 A `tree`-like view of the new file and directory structure.
-```
 
 .
 ├── \_run\_analysis.R
@@ -110,9 +109,6 @@ A `tree`-like view of the new file and directory structure.
 └── inst/
 └── extdata/
 └── example\_data.csv
-
-
-````
 
 ## 3. Information Required to Finalize Refactor
 
@@ -147,7 +143,6 @@ The following potential issues were found in the original script's logic. To mai
 These are optional suggestions for enhancing the analysis. They are not implemented in the refactored code.
 
 * **Suggestion 5.X:** [Clear, concise suggestion. Example: The analysis currently uses a straight-line model... A log-log linear model may provide a better fit.]
-````
 
 ## 6. Automated testing generation
 
@@ -156,3 +151,4 @@ This is a section detailing the current status of automated tests for the code. 
 ## 7. Continuing the refactor
 
 After completing the initial refactor, you should be prepared for the user to initiate further requests related to the suggestions above.  Iteratively ask the user if they would like for you to perform these tasks of 3) finalizing refactor, 4) fixing errors and security holes, 5) improving methodology or 6) generating automated tests.
+````
