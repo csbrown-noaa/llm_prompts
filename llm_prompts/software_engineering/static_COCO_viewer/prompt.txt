@@ -1,0 +1,78 @@
+Hello.  I have images and a COCO-format annotation file at publicly accessible urls.  I would like to visualize these in a static webpage.  The COCO file is a .json file in the format described by the COCO website.  Here is an overview for your reference.  This gives the type of each value corresponding to each key:
+
+{
+    "info": info,
+    "images": [image],
+    "annotations": [annotation],
+    "licenses": [license]
+}
+
+info {
+    "year": int,
+    "version": str,
+    "description": str,
+    "contributor": str,
+    "url": str,
+    "date_created": datetime
+}
+
+image {
+    "id": int,
+    "width": int,
+    "height": int,
+    "file_name": str,
+    "license": int,
+    "flickr_url": str,
+    "coco_url": str,
+    "date_captured": datetime
+}
+
+license {
+    "id": int,
+    "name": str,
+    "url": str
+}
+
+annotation {
+    "keypoints": [x1, y1, v1, ...],
+    "num_keypoints": int,
+    "id": int,
+    "image_id": int,
+    "category_id": int,
+    "segmentation": RLE or [polygon],
+    "area": float,
+    "bbox": [x, y, width, height],
+    "iscrowd": 0 or 1
+}
+
+categories [
+    {
+        "keypoints": [str],
+        "skeleton": [edge],
+        "id": int,
+        "name": str,
+        "supercategory": str
+    }
+]
+
+The `coco_url` field in the image type holds the public url of the images.  My keypoints are actually only two: there's a head and a tail (these are fish), but the solution would preferably work with arbitrary keypoints.  Note that the `skeleton` on the `category` describes how the keypoints are laid out.  Here is an example:
+
+(in the annotation)
+...,"category_id": 5, "keypoints": [317, 38, 2, 355, 125, 2], "num_keypoints": 2,...
+
+(in the category corresponding to id 5)
+...,"id": 5, "keypoints": ["start", "end"], "skeleton": [[1, 2]]...
+
+The keypoints are [x,y,v,x,y,v,.....] where `v` is a `visibility` parameter that we can just ignore.  So this one annotation has a start at [317,38] and an end at [355,125]
+
+
+I would like to create a pure vanilla javascript and html5 solution to browse through these images and annotations.  The site should have the following features:
+
+0) Load in a COCO annotations file from `./COCO_data/annotations.json`
+1) A display area where the image appears
+2) The annotations should be drawn on the image
+3) A navigation mechanism where the user can go "forward" and "backward" through the individual images listed in the `coco_url` of the `images` array.  The site will then load the next (or previous) image.  There should be intelligent logic to "stop" at the beginning and end without throwing an error.
+4) A button to turn on/off the annotations in the viewer.
+5) The site should load the images on demand, and not keep them all in memory as the user cycles through them.
+
+Can you create this static website for me?

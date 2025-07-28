@@ -1,0 +1,477 @@
+{
+  "info": {
+    "year": 2024,
+    "version": "0.1",
+    "description": "https://www.zooniverse.org/projects/benjamin-dot-richards/oceaneyes/about/research",
+    "contributor": null,
+    "url": null,
+    "date_created": "2025-02-06T20:56:54.886937+00:00"
+  },
+  "images": [
+    {
+      "id": 49726258,
+      "file_name": "20191121_204617_20191121.205908.343.008788.jpg",
+      "width": 968,
+      "height": 728,
+      "license": null,
+      "coco_url": "./COCO_data/20191121_204617_20191121.205908.343.008788.jpg",
+      "date_captured": null
+    },
+    {
+      "id": 49787185,
+      "file_name": "20190912_223112_20190912.225305.562.015288.jpg",
+      "width": 968,
+      "height": 728,
+      "license": null,
+      "coco_url": "./COCO_data/20190912_223112_20190912.225305.562.015288.jpg",
+      "date_captured": null
+    },
+    {
+      "id": 51312155,
+      "file_name": "20190919_184208_20190919.184734.393.003445s.jpg",
+      "width": 968,
+      "height": 728,
+      "license": null,
+      "coco_url": "./COCO_data/20190919_184208_20190919.184734.393.003445s.jpg",
+      "date_captured": null
+    }
+  ],
+  "annotations": [
+    {
+      "image_id": 49726258,
+      "id": 10846,
+      "category_id": 1,
+      "bbox": [
+        260,
+        167,
+        16,
+        43
+      ],
+      "area": 688,
+      "keypoints": [
+        260,
+        167,
+        2,
+        276,
+        209,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10847,
+      "category_id": 1,
+      "bbox": [
+        373,
+        38,
+        139,
+        21
+      ],
+      "area": 2919,
+      "keypoints": [
+        373,
+        59,
+        2,
+        512,
+        38,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10848,
+      "category_id": 1,
+      "bbox": [
+        313,
+        148,
+        40,
+        14
+      ],
+      "area": 560,
+      "keypoints": [
+        313,
+        148,
+        2,
+        353,
+        162,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10849,
+      "category_id": 1,
+      "bbox": [
+        309,
+        238,
+        64,
+        50
+      ],
+      "area": 3200,
+      "keypoints": [
+        309,
+        288,
+        2,
+        373,
+        238,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10850,
+      "category_id": 1,
+      "bbox": [
+        124,
+        179,
+        49,
+        55
+      ],
+      "area": 2695,
+      "keypoints": [
+        124,
+        234,
+        2,
+        173,
+        179,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10851,
+      "category_id": 1,
+      "bbox": [
+        68,
+        249,
+        225,
+        53
+      ],
+      "area": 11925,
+      "keypoints": [
+        68,
+        303,
+        2,
+        293,
+        249,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10852,
+      "category_id": 1,
+      "bbox": [
+        509,
+        58,
+        12,
+        45
+      ],
+      "area": 540,
+      "keypoints": [
+        521,
+        58,
+        2,
+        509,
+        103,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10853,
+      "category_id": 1,
+      "bbox": [
+        445,
+        174,
+        16,
+        7
+      ],
+      "area": 112,
+      "keypoints": [
+        445,
+        174,
+        2,
+        461,
+        181,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10854,
+      "category_id": 1,
+      "bbox": [
+        470,
+        230,
+        19,
+        32
+      ],
+      "area": 608,
+      "keypoints": [
+        470,
+        230,
+        2,
+        489,
+        263,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49726258,
+      "id": 10855,
+      "category_id": 1,
+      "bbox": [
+        404,
+        162,
+        9,
+        6
+      ],
+      "area": 54,
+      "keypoints": [
+        404,
+        168,
+        2,
+        413,
+        162,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49787185,
+      "id": 16773,
+      "category_id": 2,
+      "bbox": [
+        714,
+        224,
+        202,
+        91
+      ],
+      "area": 18382,
+      "keypoints": [
+        714,
+        224,
+        2,
+        916,
+        315,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49787185,
+      "id": 16774,
+      "category_id": 2,
+      "bbox": [
+        558,
+        93,
+        127,
+        81
+      ],
+      "area": 10287,
+      "keypoints": [
+        558,
+        93,
+        2,
+        685,
+        174,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49787185,
+      "id": 16775,
+      "category_id": 2,
+      "bbox": [
+        91,
+        517,
+        181,
+        134
+      ],
+      "area": 24254,
+      "keypoints": [
+        91,
+        651,
+        2,
+        272,
+        517,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 49787185,
+      "id": 16776,
+      "category_id": 2,
+      "bbox": [
+        809,
+        117,
+        159,
+        88
+      ],
+      "area": 13992,
+      "keypoints": [
+        809,
+        117,
+        2,
+        968,
+        205,
+        2
+      ],
+      "num_keypoints": 2
+    },
+    {
+      "image_id": 51312155,
+      "id": 37360,
+      "category_id": 6,
+      "bbox": [
+        173,
+        221,
+        146,
+        76
+      ],
+      "area": 11096,
+      "keypoints": [
+        318,
+        297,
+        2,
+        173,
+        221,
+        2
+      ],
+      "num_keypoints": 2
+    }
+  ],
+  "licenses": [
+    {
+      "name": "CC BY 4.0",
+      "id": 0,
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Kalekale",
+      "id": 1,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Opakapaka",
+      "id": 2,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Hapuʻupuʻu",
+      "id": 3,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Gindai",
+      "id": 4,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Other or Can't Tell",
+      "id": 5,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Ehu",
+      "id": 6,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Lehi",
+      "id": 7,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Onaga",
+      "id": 8,
+      "keypoints": [
+        "start",
+        "end"
+      ],
+      "skeleton": [
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  ]
+}

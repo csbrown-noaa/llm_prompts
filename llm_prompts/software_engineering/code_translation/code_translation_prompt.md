@@ -9,6 +9,7 @@ This task directs an AI to act as an expert programming language translator. It 
     2.  Next, prioritize literal, line-for-line translation unless it is impossible to replicate the logic of the original code in the target language.  From here on, when we say "line of code" we mean to include as a single line function calls and other semantic devices that can theoretically be syntactically divided across multiple lines.  However, you should be frugal in your interpretation of "line of code" and attempt to translate the code at the smallest division possible, except when this is not possible.  If you find yourself translating multiple lines of code as a single line, you have likely made an error.
     3.  Never refactor, clean, or improve the code.
     4.  Preserve all original comments without alteration.
+    5.  Output should be complete and comprehensive and verbose.  You **MUST NOT** summarize results, but should instead provide a full translation in all cases.  For example `# this is where a translation of def some_function() would appear` should not be used in place of an actual translation of `some_function()`.
 
 #### **2. Task Specification**
 * **`Inputs:`**

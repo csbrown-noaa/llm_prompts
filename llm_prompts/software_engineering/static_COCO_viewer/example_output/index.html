@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COCO Annotation Viewer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #controls {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: background-color 0.2s;
+        }
+        button:hover:not(:disabled) {
+            background-color: #e6e6e6;
+        }
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        #image-info {
+            font-size: 16px;
+            color: #555;
+            min-width: 100px;
+            text-align: center;
+        }
+        #viewer {
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #fff;
+            /* Ensure the viewer doesn't collapse when there's no content */
+            min-width: 300px;
+            min-height: 300px;
+        }
+        canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>COCO Annotation Viewer 🖼️</h1>
+
+    <div id="controls">
+        <button id="prevBtn">⬅️ Previous</button>
+        <span id="image-info">Loading...</span>
+        <button id="nextBtn">Next ➡️</button>
+        <button id="toggleBtn">Toggle Annotations (ON)</button>
+    </div>
+
+    <div id="viewer">
+        <canvas id="coco-canvas"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONFIGURATION ---
+            const ANNOTATIONS_PATH = './COCO_data/annotations.json';
+            const BBOX_COLOR = 'rgba(255, 27, 27, 0.9)';
+            const KEYPOINT_COLOR = 'rgba(27, 236, 255, 0.9)';
+            const SKELETON_COLOR = 'rgba(255, 165, 27, 0.9)';
+            const KEYPOINT_RADIUS = 5;
+            const LINE_WIDTH = 2;
+
+            // --- STATE VARIABLES ---
+            let cocoData = null;
+            let currentImageIndex = -1;
+            let showAnnotations = true;
+
+            // --- DOM ELEMENTS ---
+            const canvas = document.getElementById('coco-canvas');
+            const ctx = canvas.getContext('2d');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const imageInfoSpan = document.getElementById('image-info');
+
+            /**
+             * Fetches and loads the COCO JSON data.
+             */
+            async function loadCocoData() {
+                try {
+                    const response = await fetch(ANNOTATIONS_PATH);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    cocoData = await response.json();
+                    console.log("COCO data loaded successfully:", cocoData);
+                    
+                    if (cocoData.images && cocoData.images.length > 0) {
+                        currentImageIndex = 0;
+                        displayImage(currentImageIndex);
+                    } else {
+                        imageInfoSpan.textContent = "No images found.";
+                    }
+                } catch (error) {
+                    console.error("Failed to load annotations file:", error);
+                    imageInfoSpan.textContent = "Error loading data.";
+                }
+            }
+            
+            /**
+             * Displays an image and its annotations on the canvas.
+             * @param {number} index - The index of the image to display from the cocoData.images array.
+             */
+            function displayImage(index) {
+                if (!cocoData || index < 0 || index >= cocoData.images.length) return;
+
+                const imageInfo = cocoData.images[index];
+                
+                // --- BUG FIX ---
+                // 1. Immediately resize the canvas using dimensions from the annotation file.
+                // This is more robust as it prepares the canvas before the async image load.
+                canvas.width = imageInfo.width;
+                canvas.height = imageInfo.height;
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'center';
+                ctx.font = "16px sans-serif";
+                ctx.fillText('Loading image...', canvas.width / 2, canvas.height / 2);
+
+                const img = new Image();
+                // Required for drawing images from external URLs onto the canvas
+                img.crossOrigin = "Anonymous";
+
+                img.onload = () => {
+                    // The image has loaded successfully.
+                    // Use naturalWidth/Height for the true image dimensions.
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    
+                    ctx.drawImage(img, 0, 0);
+
+                    if (showAnnotations) {
+                        drawAnnotationsForImage(imageInfo.id);
+                    }
+                };
+                
+                img.onerror = () => {
+                    // --- BUG FIX ---
+                    // The image failed to load. Handle this gracefully.
+                    console.error("Failed to load image from URL:", imageInfo.coco_url);
+
+                    // We already sized the canvas, so just draw the error message.
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = 'red';
+                    ctx.textAlign = 'center';
+                    ctx.font = "bold 16px sans-serif";
+                    ctx.fillText(`Error: Could not load image.`, canvas.width / 2, (canvas.height / 2) - 10);
+                    ctx.font = "14px sans-serif";
+                    ctx.fillText(`URL: ${imageInfo.coco_url}`, canvas.width / 2, (canvas.height / 2) + 15);
+                    
+                    // IMPORTANT: Draw annotations anyway, as this is useful for debugging data.
+                    if (showAnnotations) {
+                        drawAnnotationsForImage(imageInfo.id);
+                    }
+                };
+
+                // Trigger the loading process
+                img.src = imageInfo.coco_url;
+                updateNavigation();
+            }
+            
+            /**
+             * Draws all annotations for a given image ID.
+             * @param {number} imageId - The ID of the image.
+             */
+            function drawAnnotationsForImage(imageId) {
+                const annotations = cocoData.annotations.filter(ann => ann.image_id === imageId);
+                const categories = cocoData.categories.reduce((acc, cat) => {
+                    acc[cat.id] = cat;
+                    return acc;
+                }, {});
+
+                annotations.forEach(ann => {
+                    if (ann.bbox) {
+                        ctx.strokeStyle = BBOX_COLOR;
+                        ctx.lineWidth = LINE_WIDTH;
+                        ctx.strokeRect(ann.bbox[0], ann.bbox[1], ann.bbox[2], ann.bbox[3]);
+                    }
+
+                    if (ann.keypoints && ann.num_keypoints > 0) {
+                        const category = categories[ann.category_id];
+                        drawKeypoints(ann.keypoints);
+                        if (category && category.skeleton) {
+                            drawSkeleton(ann.keypoints, category.skeleton);
+                        }
+                    }
+                });
+            }
+
+            /**
+             * Draws keypoints on the canvas.
+             * @param {number[]} keypoints - Array of [x, y, v, x, y, v, ...].
+             */
+            function drawKeypoints(keypoints) {
+                ctx.fillStyle = KEYPOINT_COLOR;
+                for (let i = 0; i < keypoints.length; i += 3) {
+                    const x = keypoints[i];
+                    const y = keypoints[i + 1];
+                    const v = keypoints[i + 2];
+                    if (v > 0) {
+                        ctx.beginPath();
+                        ctx.arc(x, y, KEYPOINT_RADIUS, 0, 2 * Math.PI);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            /**
+             * Draws the skeleton connections between keypoints.
+             * @param {number[]} keypoints - Array of [x, y, v, ...].
+             * @param {number[][]} skeleton - Array of edges, e.g., [[1, 2], [2, 3]].
+             */
+            function drawSkeleton(keypoints, skeleton) {
+                ctx.strokeStyle = SKELETON_COLOR;
+                ctx.lineWidth = LINE_WIDTH;
+
+                skeleton.forEach(edge => {
+                    const startPointIndex = (edge[0] - 1) * 3;
+                    const endPointIndex = (edge[1] - 1) * 3;
+                    const startVisible = keypoints[startPointIndex + 2] > 0;
+                    const endVisible = keypoints[endPointIndex + 2] > 0;
+                    
+                    if (startVisible && endVisible) {
+                        ctx.beginPath();
+                        ctx.moveTo(keypoints[startPointIndex], keypoints[startPointIndex + 1]);
+                        ctx.lineTo(keypoints[endPointIndex], keypoints[endPointIndex + 1]);
+                        ctx.stroke();
+                    }
+                });
+            }
+
+            /**
+             * Updates the state of navigation buttons and info text.
+             */
+            function updateNavigation() {
+                if (!cocoData) return;
+                imageInfoSpan.textContent = `Image ${currentImageIndex + 1} of ${cocoData.images.length}`;
+                prevBtn.disabled = currentImageIndex === 0;
+                nextBtn.disabled = currentImageIndex === cocoData.images.length - 1;
+            }
+
+            // --- EVENT LISTENERS ---
+            prevBtn.addEventListener('click', () => {
+                if (currentImageIndex > 0) {
+                    currentImageIndex--;
+                    displayImage(currentImageIndex);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentImageIndex < cocoData.images.length - 1) {
+                    currentImageIndex++;
+                    displayImage(currentImageIndex);
+                }
+            });
+
+            toggleBtn.addEventListener('click', () => {
+                showAnnotations = !showAnnotations;
+                toggleBtn.textContent = `Toggle Annotations (${showAnnotations ? 'ON' : 'OFF'})`;
+                displayImage(currentImageIndex);
+            });
+
+            // --- INITIALIZATION ---
+            loadCocoData();
+        });
+    </script>
+</body>
+</html>
+
